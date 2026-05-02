@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --saffron: #e07b1a;
+  --saffron-hover: #c96d10;
+  --cream: #fdf6ed;
+  --card-bg: #fffaf3;
+  --brown: #3d1f00;
+  --brown-mid: #6b3e1a;
+  --border: #e4cda8;
+  --shadow: rgba(61, 31, 0, 0.08);
+  --error: #b83232;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--brown);
+  font-family: "DM Sans", sans-serif;
+  min-width: 375px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page wrapper ── */
+.page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 20px 56px;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  padding: 32px 0 24px;
+}
+
+.logo {
+  font-family: "Lora", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--brown);
+  letter-spacing: -0.3px;
+}
+
+.tagline {
+  font-family: "Lora", serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--brown-mid);
+  margin-top: 8px;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 1.5px solid var(--border);
+  margin: 4px 0 28px;
+}
+
+/* ── Status messages (loading / closed / no menu) ── */
+.status-message {
+  font-family: "Lora", serif;
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--brown-mid);
+  margin-top: 56px;
+  line-height: 1.7;
+  padding: 0 16px;
+}
+
+/* ── Section heading ── */
+.section-heading {
+  font-family: "Lora", serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 14px;
+}
+
+/* ── Menu card ── */
+.menu-section {
+  margin-bottom: 32px;
+}
+
+.menu-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.menu-text {
+  font-family: "Lora", serif;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--brown);
+  white-space: pre-wrap;
+}
+
+/* ── Form card ── */
+.form-section {
+  margin-bottom: 24px;
+}
+
+.form-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+/* ── Fields ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.field label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--brown);
+  margin-bottom: 7px;
+}
+
+.field input {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: var(--brown);
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.18s;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.field input:focus {
+  border-color: var(--saffron);
+}
+
+.field-error {
+  font-size: 0.85rem;
+  color: var(--error);
+  margin-top: 6px;
+}
+
+/* ── Submit error ── */
+.submit-error {
+  font-size: 0.875rem;
+  color: var(--error);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* ── Submit button ── */
+.submit-btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--saffron);
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  width: 100%;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    opacity 0.18s;
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--saffron-hover);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Thank you card ── */
+.thankyou-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 36px 24px;
+  box-shadow: 0 2px 10px var(--shadow);
+  text-align: center;
+}
+
+.thankyou-card p {
+  font-family: "Lora", serif;
+  font-size: 1.2rem;
+  color: var(--brown);
+  line-height: 1.7;
+}
