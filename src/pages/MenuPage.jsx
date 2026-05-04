@@ -199,8 +199,6 @@ export default function MenuPage() {
     if (!form.name.trim()) newErrors.name = "Please enter your name";
     if (!form.phone.trim()) {
       newErrors.phone = "Please enter your phone number";
-    } else if (!/^\d{10}$/.test(form.phone.trim())) {
-      newErrors.phone = "Must be exactly 10 digits";
     }
     if (!form.quantity || form.quantity < 1 || form.quantity > 10) {
       newErrors.quantity = "Enter a number between 1 and 10";
