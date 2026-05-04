@@ -1,17 +1,18 @@
-import { cleanupOldOrders } from "./orderService";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "./config";
 import { cleanupOldMenus } from "./menuService";
-
-const CLEANUP_KEY = "dabbago_last_cleanup";
+import { cleanupOldOrders } from "./orderService";
 
 function getTodayStr() {
   return new Date().toISOString().split("T")[0];
 }
 
-// Runs once per Sunday. Silently skips on all other days or if already ran today.
 export async function runWeeklyCleanupIfDue() {
-  if (new Date().getDay() !== 0) return;
-  if (localStorage.getItem(CLEANUP_KEY) === getTodayStr()) return;
+  const today = getTodayStr();
+  const settingsRef = doc(db, "settings", "app");
+  const snap = await getDoc(settingsRef);
+  if (snap.data()?.lastCleanup === today) return;
 
   await Promise.all([cleanupOldOrders(), cleanupOldMenus()]);
-  localStorage.setItem(CLEANUP_KEY, getTodayStr());
+  await setDoc(settingsRef, { lastCleanup: today }, { merge: true });
 }

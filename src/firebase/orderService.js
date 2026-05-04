@@ -1,13 +1,13 @@
 import {
-  collection,
-  doc,
   addDoc,
+  collection,
   deleteDoc,
+  doc,
   getDocs,
-  query,
-  where,
   orderBy,
+  query,
   serverTimestamp,
+  where,
   writeBatch,
 } from "firebase/firestore";
 import { db } from "./config";
@@ -36,8 +36,8 @@ export async function getNewOrders() {
     query(
       collection(db, "orders"),
       where("exported", "==", false),
-      orderBy("createdAt", "asc")
-    )
+      orderBy("createdAt", "asc"),
+    ),
   );
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
@@ -48,14 +48,18 @@ export async function deleteOrder(orderId) {
 
 export async function markOrdersExported(orders) {
   const batch = writeBatch(db);
-  orders.forEach((o) => batch.update(doc(db, "orders", o.id), { exported: true }));
+  orders.forEach((o) =>
+    batch.update(doc(db, "orders", o.id), { exported: true }),
+  );
   await batch.commit();
 }
 
-// Deletes all orders placed before today. Runs on Sunday to clear the week's history.
+// Deletes orders older than 7 days.
 export async function cleanupOldOrders() {
+  const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const cutoffStr = cutoff.toISOString().split("T")[0];
   const snap = await getDocs(
-    query(collection(db, "orders"), where("date", "<", getTodayString()))
+    query(collection(db, "orders"), where("date", "<", cutoffStr)),
   );
   if (snap.empty) return;
   const batch = writeBatch(db);

@@ -31,6 +31,18 @@ export async function getCurrentMenu() {
   return snap.docs[0].data().items;
 }
 
+export async function getCurrentMenuFull() {
+  const snap = await getDocs(
+    query(collection(db, "menu"), where("isCurrentMenu", "==", true), limit(1))
+  );
+  if (snap.empty) return null;
+  const data = snap.docs[0].data();
+  return {
+    items: data.items ?? null,
+    createdAt: data.createdAt?.toDate?.() ?? null,
+  };
+}
+
 export async function saveMenu(items) {
   const newDocRef = await addDoc(collection(db, "menu"), {
     items,
@@ -48,13 +60,16 @@ export async function saveMenu(items) {
   await batch.commit();
 }
 
-// Deletes all non-active menu documents (old menus replaced by newer ones).
+// Deletes menu documents older than 7 days, protecting the current active menu.
 export async function cleanupOldMenus() {
+  const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const snap = await getDocs(
-    query(collection(db, "menu"), where("isCurrentMenu", "==", false))
+    query(collection(db, "menu"), where("createdAt", "<", cutoff))
   );
   if (snap.empty) return;
   const batch = writeBatch(db);
-  snap.docs.forEach((d) => batch.delete(d.ref));
+  snap.docs
+    .filter((d) => !d.data().isCurrentMenu)
+    .forEach((d) => batch.delete(d.ref));
   await batch.commit();
 }
